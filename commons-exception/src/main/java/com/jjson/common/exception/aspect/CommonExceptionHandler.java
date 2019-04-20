@@ -36,7 +36,9 @@ public class CommonExceptionHandler {
     public Object exceptionHandler(ProceedingJoinPoint joinPoint, ErrorHandler errorHandler) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodPath = AspectUtil.getMethodPath(joinPoint);
-        log.info("Invoke method[{}], params: [{}]", methodPath, joinPoint.getArgs());
+        if (errorHandler.logStart()) {
+            log.info("Invoke method[{}], params: [{}]", methodPath, joinPoint.getArgs());
+        }
         String methodLong = joinPoint.getSignature().toLongString();
         if (!AspectUtil.METHODS.containsKey(methodLong)) {
             AspectUtil.METHODS.putIfAbsent(methodLong, methodSignature.getMethod());
@@ -44,7 +46,9 @@ public class CommonExceptionHandler {
         methodSignature.getReturnType();
         try {
             Object result = joinPoint.proceed();
-            log.debug("Invoke method[{}], result: {}", methodPath, result);
+            if (errorHandler.logEnd()) {
+                log.debug("Invoke method[{}], result: {}", methodPath, result);
+            }
             return result;
         } catch (CommonBizException e) {
             AspectUtil.judgeErrorSkip(methodLong, e);
