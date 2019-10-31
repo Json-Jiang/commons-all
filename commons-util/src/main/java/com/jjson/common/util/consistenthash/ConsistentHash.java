@@ -48,6 +48,9 @@ public class ConsistentHash {
     }
 
     public void addHost(List<String> hosts) {
+        if (null == hosts) {
+            throw new NullPointerException("Host is null.");
+        }
         synchronized (servers) {
             for (String host : hosts) {
                 for (int i = 0; i < virtualScale / 4; i++) {
@@ -63,6 +66,9 @@ public class ConsistentHash {
     }
     
     public void removeHost(List<String> hosts) {
+        if (null == hosts) {
+            throw new NullPointerException("Host is null.");
+        }
         synchronized (servers) {
             for (String host : hosts) {
                 for (int i = 0; i < virtualScale / 4; i++) {
@@ -78,7 +84,7 @@ public class ConsistentHash {
     }
     
     /**
-     * 参考dubbo实现的hash
+     * 参考dubbo实现的hash, 理论上存在hash冲突的可能性
      * @param digest MD5计算后得到的字节数组
      * @param number 分段数字，最高为3
      * @return hash值

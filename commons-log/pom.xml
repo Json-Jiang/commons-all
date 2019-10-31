@@ -11,5 +11,10 @@
 
     <artifactId>commons-log</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.jjson</groupId>
+            <artifactId>commons-exception</artifactId>
+        </dependency>
+    </dependencies>
 </project>
