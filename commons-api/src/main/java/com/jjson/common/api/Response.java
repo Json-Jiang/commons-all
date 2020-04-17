@@ -3,6 +3,7 @@ package com.jjson.common.api;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author jiangjunshen
@@ -11,17 +12,30 @@ import java.io.Serializable;
 @Data
 public class Response<T> implements Serializable {
 
-    /** 必填 是否成功标识 */
+    /**
+     * 必填 是否成功标识
+     */
     private boolean success;
 
-    /** 非必填 返回结果集 */
+    /**
+     * 非必填 返回结果集
+     */
     private T result;
 
-    /** 失败时必填 业务码/失败码 全局需唯一 */
+    /**
+     * 失败时必填 业务码/失败码 全局需唯一
+     */
     private String code;
 
-    /** 失败时必填 业务文案/失败文案提示 */
+    /**
+     * 失败时必填 业务文案/失败文案提示
+     */
     private String message;
+
+    /**
+     * 元数据，额外信息
+     */
+    private Map<String, Object> metaData;
 
     public boolean isSuccess() {
         return this.success;
@@ -35,7 +49,7 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> ok() {
-        return ok((T)null);
+        return ok((T) null);
     }
 
     public static <T> Response<T> fail(String code, String message) {
@@ -57,6 +71,15 @@ public class Response<T> implements Serializable {
         Response<T> resp = new Response<>();
         resp.setCode(code);
         resp.setSuccess(false);
+        return resp;
+    }
+
+    public static <T> Response<T> fail(String code, String message, Map<String, Object> metaData) {
+        Response<T> resp = new Response<>();
+        resp.setCode(code);
+        resp.setMessage(message);
+        resp.setSuccess(false);
+        resp.setMetaData(metaData);
         return resp;
     }
 }
