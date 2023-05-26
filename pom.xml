@@ -19,7 +19,7 @@
 
     <properties>
         <spring.version>5.1.6.RELEASE</spring.version>
-        <springboot.version>2.1.4.RELEASE</springboot.version>
+        <springboot.version>2.5.15</springboot.version>
         <lombok.version>1.16.10</lombok.version>
         <slf4j.version>1.7.21</slf4j.version>
         <curator.version>4.2.0</curator.version>
